@@ -4,52 +4,83 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 
-#define   MAX_COUNT  3
+int main(){
 
-void  ChildProcess(void);                /* child process prototype  */
-void  ParentProcess(void);               /* parent process prototype */
-pid_t  pid;
-int  main(void)
-{
-     
+pid_t pid, pid1, pid2,pid3;
+int status;
+  
+//first fork
+pid = fork();
 
-     pid = fork();
-          if (pid == 0) 
-          ChildProcess();
-     else 
-          ParentProcess();
+//int childcount  = 0 ;
+if(pid < 0){
+    exit(EXIT_FAILURE);
 }
 
-void  ChildProcess(void)
-{
-     int   i;
+else if (pid > 0){
+  // first parent
+  printf("From parent process %d: child_1 is created with PID %d\n", getpid(),pid);
+  
+    //second child creation
+  pid1 = fork();
 
-     for (i = 1; i <= MAX_COUNT; i++)
-          printf("child This line is from child, value = %d\n", i);
+    if(pid1>0){
+      //parent (second child)
+      printf("From parent process %d: child_2 is created with PID %d\n", getpid(),pid1);
+      printf("From parent Process %d: Waiting for child_2 to complete before creating child_3\n",getpid());
+      wait(0);
+      pid3 = fork();
 
-
-
-     printf("   *** Child process is done ***\n");
-}
-
-void  ParentProcess(void)
-{
-     int   i;
-
-   //  for (i = 1; i <= MAX_COUNT; i++)
-       printf("I am the parent %d\n", getpid()); 
-          printf("FIRST From parent process %d: child_1 is created with PID %d\n", getppid(),getpid());
-     printf("*** Parent is done ***\n");
-
-        pid = fork();
+      if(pid3>0){
+      //parent (thrid child)
+        wait(0);
+        printf("From parent process %d: child_3 is created with PID %d\n", getpid(),pid3);
           
+        
+      }
 
-          if(pid ==0){
+      else
+          {
+            printf("From child_3: Calling an external program B.out and leaving child_3…\n");
+            printf("From the external program B: \n");
+            execl("b.out","b.out",NULL);
 
-               printf("FIRSTGRNAD From child_1: child_1.1 is created with PID %d my parent is %d\n", getpid(),getppid());
+            }
+    }
+  
 
-          }
+
+    else if( pid1 ==0)
+      {
+
+      }
+    //third child creation
+  
 
 
     
+        // printf("I am the parent %d\n", getpid()); 
+ // wait(0);
+  //printf("wait\n"); 
+
+    }
+ else {
+    /* Child process of the first fork call */
+    pid2 = fork();
+
+    if (pid2>0)
+    {
+    printf("From child_1: child_1.1 is created with PID %d\n", pid2);
+    }
+    if(pid2 ==0){
+      
+  
+    }
+     
+
+}
+
+
+
+return 0; 
 }
