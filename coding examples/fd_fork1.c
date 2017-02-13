@@ -16,17 +16,25 @@ int main()
     char c;
     pid_t pid;
 
-    fd1 = fopen("foo.txt",  "r");
-    fd2 = fopen("foo.txt", "r"); 
-
     pid = fork (); 
+   // fd1 = fopen("foo.txt",  "r");
+ 
+ fd1 = fopen("foo.txt",  "r");
+     fd2 = fopen("foo.txt", "r"); 
+
+
     if (pid > 0){
+
+      // parent
         fscanf(fd1, "%c", &c);
       printf("parent: c = %c\n", c);
 	wait(NULL);
     }
 
 else if (pid == 0) {
+
+  // child 
+
         fscanf(fd2, "%c", &c);
        printf("child: c = %c\n", c);
     }

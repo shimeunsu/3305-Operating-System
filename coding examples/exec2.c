@@ -12,11 +12,11 @@
 int main()
 {
 
-  int i = 5;
+  int i = 6;
   char *prog_argv[2];
   int status;
 
-  prog_argv[0] = "/home/user/Lectures/Exec/B";
+  prog_argv[0] = "/Users/eunsushim/Desktop/2017 Winter UWO/3305/coding examples/B";
   prog_argv[1] = NULL;
   printf("%d\n",i);
 
@@ -26,5 +26,5 @@ int main()
      printf("errno is %d\n",errno);
      exit(status);
   }
-  printf("%d\n",i);
+  printf("%d\n",i); // this does not get printed
 }

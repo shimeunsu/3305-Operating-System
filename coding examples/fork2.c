@@ -25,18 +25,20 @@ int main()
     exit(pid);
   }
 
+    if (pid == 0)
+    {
+        for( i=0; i < 10; i++ )
+            sum = sum - i;
+        printf("child: sum is %d\n",sum);
+    }
   if( pid > 0 ) 
-  { 
+  {
+      wait(0);
     for( i=0; i < 10; i++) 
          sum = sum + i;
     printf("parent: sum is %d\n",sum);
-    wait(0);
+    //wait(0);
   }
-  else
-  {
-    for( i=0; i < 10; i++ ) 
-         sum = sum - i;
-    printf("child: sum is %d\n",sum);
-  }
+
   return 0;
 }
