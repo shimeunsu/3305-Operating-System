@@ -16,7 +16,7 @@ int main()
   int i=5;
   int status;
 
-  status = execlp("ls", "ls" "-lt", "B.c", NULL);
+  status = execlp("ls", "ls" "-lt", "B", NULL);
   if (status < 0){
     perror("exec");
     printf("main: errno is %d\n",errno);
